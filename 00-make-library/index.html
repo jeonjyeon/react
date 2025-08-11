@@ -30,17 +30,78 @@
         // Euid.createElement(elementType, properties, ...children)
         const Euid = Object.freeze({
           createElement(elementType, properties = {}, ...children) {
-            console.log(`elementType`, elementType);
-            console.log(`properties`, properties);
-            console.log(`children`, children);
+            // 요소 생성
+            const element = document.createElement(elementType);
+
+            // 속성({ key: value, ... }) 순환해서 요소에 설정
+            // JavaScript 객체(키, 값의 집합)를 순환하려면? -> Object.entries(object) -> Iterable Protocol
+            // for...of 문
+            for (let [key, value] of Object.entries(properties)) {
+              if (key.includes("className")) key = "class";
+              element.setAttribute(key, value);
+            }
+
+            // 전달된 children 배열은 요소의 자식들로 구성
+            // children.forEach((child /* ElementNode | TextNode */) => {
+            //   // 조건 1. 텍스트(string)인 경우
+            //   if (typeof child === "string") {
+            //     element.appendChild(document.createTextNode(child));
+            //   }
+            //   // 조건 2. ElementNode인 경우
+            //   else {
+            //     element.appendChild(child);
+            //   }
+            // });
+            element.append(...children);
+
+            return element;
           },
         });
 
+        // <section id="bun-documation" aria-label="Bun 런타임 사용법" class="bunx-introduction"></section>
+        // const element = Euid.createElement("section", {
+        //   id: "bun-documation",
+        //   className: "bunx-introduction",
+        //   "aria-label": "Bun 런타임 사용법",
+        //   title: "this is a section element",
+        // });
+
+        // console.log(element.outerHTML);
+
         // <section class="bunx-introduction"></section>
-        const element = Euid.createElement("section", {
-          className: "bunx-introduction",
-        });
-        console.log(element);
+        const sectionElement = Euid.createElement(
+          "section",
+          {
+            className: "bunx-introduction",
+          },
+          Euid.createElement(
+            "h1",
+            {},
+            Euid.createElement("code", {}, "bunx"),
+            "명령"
+          ),
+          Euid.createElement(
+            "p",
+            {},
+            Euid.createElement(
+              "a",
+              {
+                href: "https://bun.sh",
+                target: "_blank",
+                rel: "noopener noreferrer",
+              },
+              "Bun"
+            ),
+            "의 빠른 시작 덕분에, ",
+            Euid.createElement("code", {}, "bunx"),
+            "는 로컬에 설치된 패키지 실행 시 ",
+            Euid.createElement("code", {}, "npx"),
+            "보다 약 100배 빠릅니다."
+          )
+        );
+        console.log(sectionElement);
+
+        document.body.appendChild(sectionElement);
       }
     </script>
     <script
