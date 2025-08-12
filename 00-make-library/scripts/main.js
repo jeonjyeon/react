@@ -1,5 +1,7 @@
-import { createElement as h /* hyperscript */ } from "./lib/Euid.js";
-import { createRoot } from "./lib/EuidDOM.js";
+// import { createElement as h /* hyperscript */ } from "./lib/real/Euid.js";
+// import { createRoot } from "./lib/real/EuidDOM.js";
+import { createElement as h /* hyperscript */ } from "./lib/virtual/Euid.js";
+import { createRoot } from "./lib/virtual/EuidDOM.js";
 
 // Creating Elements
 // Declarative Programming
