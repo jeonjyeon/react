@@ -8,21 +8,38 @@
 // 리액트.컴포넌트 클래스(super)를 확장한 서브 클래스 생성
 class AppButton extends React.Component {
   // 생성자(constructor) 함수
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props)
+  //   // 이 안에서 무언가를 하지 않으면 생략 가능
+  //   // 컴포넌트 상태(로컬 데이터)
+  //   // this.state = {}
+  // }
 
   // 렌더 메서드
+  // render() {
+  //   // 리액트 엘리먼트 반환
+  //   return React.createElement(
+  //     "button",
+  //     {
+  //       type: this.props.type,
+  //       className: this.props.className,
+  //       disabled: this.props.disabled,
+  //     },
+  //     this.props.children
+  //   );
+  // }
+
+  // 객체 구조 분해 할당 사용 시
   render() {
-    // 리액트 엘리먼트 반환
+    const { type, className, disabled, children } = this.props;
     return React.createElement(
       "button",
       {
-        type: this.props.type,
-        className: this.props.className,
-        disabled: this.props.disabled,
+        type: type,
+        className: className,
+        disabled: disabled,
       },
-      this.props.children
+      children
     );
   }
 }
