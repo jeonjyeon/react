@@ -1,3 +1,5 @@
+import { LogoClass, LogoFunction } from "./components/logo.js";
+
 {
   const MIN = 30,
     MAX = 99;
@@ -37,50 +39,6 @@
 
   const reactDOMRoot = ReactDOM.createRoot(container);
 
-  const logoElement = React.createElement(
-    "svg",
-    {
-      className: "logo",
-      "aria-label": "리액트",
-      viewBox: "0 0 21 21",
-      fill: "none",
-    },
-    React.createElement(
-      "g",
-      { clipPath: "url(#clip-0zk)" },
-      React.createElement("path", {
-        d: "M10.5 12.45C11.6046 12.45 12.5 11.5546 12.5 10.45C12.5 9.34543 11.6046 8.45 10.5 8.45C9.39543 8.45 8.5 9.34543 8.5 10.45C8.5 11.5546 9.39543 12.45 10.5 12.45Z",
-        fill: "currentColor",
-      }),
-      React.createElement("path", {
-        d: "M10.5 14.95C16.0228 14.95 20.5 12.9353 20.5 10.45C20.5 7.96472 16.0228 5.95 10.5 5.95C4.97715 5.95 0.5 7.96472 0.5 10.45C0.5 12.9353 4.97715 14.95 10.5 14.95Z",
-        stroke: "currentColor",
-      }),
-      React.createElement("path", {
-        d: "M6.60289 12.7C9.36431 17.4829 13.3477 20.3529 15.5 19.1103C17.6523 17.8676 17.1585 12.9829 14.3971 8.2C11.6357 3.41707 7.65232 0.547105 5.5 1.78975C3.34768 3.03239 3.84146 7.91707 6.60289 12.7Z",
-        stroke: "currentColor",
-      }),
-      React.createElement("path", {
-        d: "M6.60289 8.2C3.84146 12.9829 3.34768 17.8676 5.5 19.1103C7.65232 20.3529 11.6357 17.4829 14.3971 12.7C17.1585 7.91707 17.6523 3.03239 15.5 1.78975C13.3477 0.547105 9.36431 3.41707 6.60289 8.2Z",
-        stroke: "currentColor",
-      })
-    ),
-    React.createElement(
-      "defs",
-      {},
-      React.createElement(
-        "clipPath",
-        { id: "clip-0zk" },
-        React.createElement("rect", {
-          width: 21,
-          height: 21,
-          fill: "#fff",
-          transform: "translate(0 1)",
-        })
-      )
-    )
-  );
-
   const shortcutElement = React.createElement(
     "p",
     { className: "shortcut-info" },
@@ -92,7 +50,8 @@
     const app = React.createElement(
       "div",
       { className: "randomCountUpApp" },
-      logoElement,
+      // React.createElement(LogoFunction),
+      React.createElement(LogoClass),
       React.createElement("output", { className: "output" }, count),
       shortcutElement
     );
@@ -131,7 +90,7 @@
 
     document.body.addEventListener("click", replay);
     document.body.addEventListener("keydown", (e) => {
-      if (e.shiftKey && e.code === "Enter") replay();
+      if (e.shiftKey || e.code === "Enter") replay();
     });
   });
 }
