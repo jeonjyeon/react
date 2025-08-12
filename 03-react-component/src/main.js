@@ -40,7 +40,8 @@ import { App } from "./app.js";
   const reactDOMRoot = ReactDOM.createRoot(container);
 
   function render() {
-    reactDOMRoot.render(App({ count, targetCount }));
+    const app = React.createElement(App, { count, targetCount });
+    reactDOMRoot.render(app);
   }
 
   let animateId;
