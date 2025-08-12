@@ -3,7 +3,7 @@
 // 1. Functional
 // 2. Class
 
-export function LogoFunction() {
+export default function LogoFunction() {
   const logoElement = React.createElement(
     "svg",
     {

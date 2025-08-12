@@ -1,4 +1,4 @@
-export function ShortcutFunction() {
+export default function ShortcutFunction() {
   const data = {
     className: "shortcut-info",
     shortcutKey: "Shift + Enter",

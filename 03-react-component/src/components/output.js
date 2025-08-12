@@ -1,11 +1,12 @@
-export function OutputFunction(props) {
-  let classNames = "output";
+export default function OutputFunction(props) {
+  // let classNames = "output";
 
-  if (props.isAnimate) {
-    /* 컴포넌트 속성: 상태를 제어하는 클래스 이름 */
-    // console.log(props.isAnimate)
-    classNames += " is-animate";
-  }
+  // if (props.isAnimate) {
+  //   /* 컴포넌트 속성: 상태를 제어하는 클래스 이름 */
+  //   // console.log(props.isAnimate)
+  //   classNames += " is-animate";
+  // }
+  const classNames = `output ${props.isAnimate ? "is-animate" : ""}`.trim();
 
   return React.createElement(
     "output",

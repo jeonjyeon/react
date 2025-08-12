@@ -1,6 +1,9 @@
-import { LogoFunction as Logo } from "./components/logo.js";
-import { ShortcutFunction as Shortcut } from "./components/shortcut.js";
-import { OutputFunction as Output } from "./components/output.js";
+// import { LogoFunction as Logo } from "./components/logo.js";
+// import { ShortcutFunction as Shortcut } from "./components/shortcut.js";
+// import { OutputFunction as Output } from "./components/output.js";
+
+import { Output, Logo, Shortcut } from "./components/index.js"; // 일반적인 JS(ESM) 문법
+// import { Output, Logo, Shortcut } from "@/components"; // Vite, Webpack 등에서 지원하는 "경로 별칭(alias)" 문법
 
 export function App(props) {
   // console.log(props) /* { count, targetCount } */
