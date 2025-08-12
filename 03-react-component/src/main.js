@@ -110,6 +110,8 @@
     }
 
     render();
+
+    animateId = requestAnimationFrame(animate);
   }
 
   function play() {
