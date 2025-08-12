@@ -1,4 +1,6 @@
 import { LogoClass, LogoFunction } from "./components/logo.js";
+import { ShortcutClass, ShortcutFunction } from "./components/shortcut.js";
+import { OutputClass, OutputFunction } from "./components/output.js";
 
 {
   const MIN = 30,
@@ -39,21 +41,16 @@ import { LogoClass, LogoFunction } from "./components/logo.js";
 
   const reactDOMRoot = ReactDOM.createRoot(container);
 
-  const shortcutElement = React.createElement(
-    "p",
-    { className: "shortcut-info" },
-    React.createElement("code", {}, "Shift + Enter"),
-    " 키를 누르면 애니메이션이 다시 시작됩니다."
-  );
-
   function render() {
     const app = React.createElement(
       "div",
       { className: "randomCountUpApp" },
       // React.createElement(LogoFunction),
       React.createElement(LogoClass),
-      React.createElement("output", { className: "output" }, count),
-      shortcutElement
+      // React.createElement(OutputFunction, {}, count),
+      React.createElement(OutputClass, {}, count),
+      // React.createElement(ShortcutFunction)
+      React.createElement(ShortcutClass)
     );
 
     reactDOMRoot.render(app);
