@@ -1,6 +1,4 @@
-import { LogoClass, LogoFunction } from "./components/logo.js";
-import { ShortcutClass, ShortcutFunction } from "./components/shortcut.js";
-import { OutputClass, OutputFunction } from "./components/output.js";
+import { App } from "./app.js";
 
 {
   const MIN = 30,
@@ -42,18 +40,7 @@ import { OutputClass, OutputFunction } from "./components/output.js";
   const reactDOMRoot = ReactDOM.createRoot(container);
 
   function render() {
-    const app = React.createElement(
-      "div",
-      { className: "randomCountUpApp" },
-      // React.createElement(LogoFunction),
-      React.createElement(LogoClass),
-      // React.createElement(OutputFunction, {}, count),
-      React.createElement(OutputClass, {}, count),
-      // React.createElement(ShortcutFunction)
-      React.createElement(ShortcutClass)
-    );
-
-    reactDOMRoot.render(app);
+    reactDOMRoot.render(App({ count }));
   }
 
   let animateId;
