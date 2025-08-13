@@ -98,7 +98,8 @@ function renderLists(length, props) {
     React.createElement(
       Output,
       {
-        key: crypto.randomUUID(),
+        // key: crypto.randomUUID(),
+        key: index,
         isAnimate: props.count < props.targetCount ? true : false,
       },
       props.count + index
