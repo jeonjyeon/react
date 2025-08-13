@@ -75,7 +75,7 @@ import { App } from "./app.js";
 
     document.body.addEventListener("click", replay);
     document.body.addEventListener("keydown", (e) => {
-      if (e.shiftKey || e.code === "Enter") replay();
+      if (e.shiftKey && e.code === "Enter") replay();
     });
   });
 }

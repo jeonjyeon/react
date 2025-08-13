@@ -253,7 +253,7 @@
           play();
           document.addEventListener("click", replay);
           document.addEventListener("keydown", (e) => {
-            if (e.shiftKey || e.key === "Enter") {
+            if (e.shiftKey && e.key === "Enter") {
               replay();
             }
           });
