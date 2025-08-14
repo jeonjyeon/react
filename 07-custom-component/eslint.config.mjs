@@ -73,7 +73,7 @@ export default defineConfig([
       // 콘솔 사용 제한
       // - 디버깅용 console.log 남용 방지
       // - warn, error만 허용하여 프로덕션 코드 품질 향상
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      // 'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
   },
 ])
