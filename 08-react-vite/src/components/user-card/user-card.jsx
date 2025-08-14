@@ -27,6 +27,7 @@ export default function UserCard(props) {
           <dt>주소</dt>
           <dd>{props.address}</dd>
         </div>
+        <button type="button">수정</button>
       </dl>
     </article>
   )

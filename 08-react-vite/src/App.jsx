@@ -1,30 +1,34 @@
-import UserCard from "./components/user-card/user-card";
+import users from './data/user.json'
+import UserCard from './components/user-card/user-card'
 
 export default function App() {
+  console.log(users)
+  const [user1, user2, user3] = users
+
   return (
     <section className="app demo">
       <h1>UserCard 커스텀 컴포넌트</h1>
       <UserCard
-        id="user-park-ziel"
-        name="박주성"
-        phoneNumber="010-1234-5678"
-        address="강원특별자치도 삼척시 명륜동 12-10"
-        age={46}
+        id={user1.id}
+        name={user1.name}
+        phoneNumber={user1.phoneNumber}
+        address={user1.address}
+        age={user1.age}
       />
       <UserCard
-        id="user-han-di1k"
-        name="한아름"
-        phoneNumber="010-5678-1234"
-        address="서울특별시 중구 이청동 98-1"
-        age={31}
+        id={user2.id}
+        name={user2.name}
+        phoneNumber={user2.phoneNumber}
+        address={user2.address}
+        age={user2.age}
       />
       <UserCard
-        id="user-kim-eicj1"
-        name="김성한"
-        phoneNumber="010-2871-9302"
-        address="서울특별시 성북구 미아동 12-5"
-        age={22}
+        id={user3.id}
+        name={user3.name}
+        phoneNumber={user3.phoneNumber}
+        address={user3.address}
+        age={user3.age}
       />
     </section>
-  );
+  )
 }
