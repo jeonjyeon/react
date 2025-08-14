@@ -1,3 +1,5 @@
+import React from 'react'
+
 export default function Logo() {
   return (
     <svg className="logo" aria-label="리액트" viewBox="0 0 21 21" fill="none">
@@ -21,7 +23,7 @@ export default function Logo() {
       </g>
       <defs>
         <clipPath id="clip-0zk">
-          <rect width={21} height={19} fill="#fff" transform="translate(0 1)" />
+          <rect width={21} height={21} fill="#fff" transform="translate(0 1)" />
         </clipPath>
       </defs>
     </svg>

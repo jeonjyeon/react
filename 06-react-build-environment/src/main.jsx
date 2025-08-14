@@ -1,2 +1,5 @@
+import './demo'
 import './styles/main.css'
-import './components/random-count-up'
+
+// HMR 기능 활성
+// import.meta.hot.accept()
