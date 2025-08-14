@@ -5,7 +5,9 @@
   "description": "리액트 빌드 환경을 메뉴얼 구성합니다.",
   "version": "1.0.0",
   "scripts": {
-    "dev": "bun index.html"
+    "dev": "bun index.html",
+    "format:check": "prettier --check --cache \"src/**/*.{js,jsx,json}\"",
+    "format:fix": "prettier --write --cache --list-different \"src/**/*.{js,jsx,json}\""
   },
   "engines": {
     "bun": ">=1.0.0"
@@ -15,7 +17,13 @@
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.33.0",
     "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.7"
+    "@types/react-dom": "^19.1.7",
+    "eslint": "^9.33.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.3.0",
+    "prettier": "^3.6.2"
   }
 }
