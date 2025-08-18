@@ -1,4 +1,3 @@
-import DownArrowIcon from './cevron.jsx'
 import './style.css'
 
 /**
@@ -17,10 +16,6 @@ export default function AccordionItem({
   isOpen = false,
   onActive,
 }) {
-  // const buttonLabel = isOpen ? '닫힘' : '열림'
-  let flipped = false
-  isOpen ? (flipped = false) : (flipped = true)
-
   return (
     <div className="accordion-item">
       <dd>
@@ -30,7 +25,15 @@ export default function AccordionItem({
           onClick={() => onActive?.(index)}
         >
           {question}
-          <DownArrowIcon flipped={flipped} />
+          <img
+            src="/assets/cevron.svg"
+            alt=""
+            style={
+              isOpen
+                ? { transform: 'rotate(0deg)' }
+                : { transform: 'rotate(180deg)' }
+            }
+          />
         </button>
       </dd>
       <dd className="accordion-answer" hidden={!isOpen}>

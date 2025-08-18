@@ -19,10 +19,14 @@ dl {
 }
 
 .accordion-item {
+  width: 342px;
+  height: auto;
+
   display: flex;
   padding: 24px;
   flex-direction: column;
   gap: 8px;
+  justify-items: center;
 
   background-color: #eef4ff;
   border-radius: 16px;
@@ -32,7 +36,8 @@ dl {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  column-gap: 15px;
 
   color: #191f28;
   font-family: 'Noto Sans KR';
@@ -44,8 +49,6 @@ dl {
 }
 
 .accordion-answer {
-  width: 100%;
-
   color: rgba(25, 31, 40, 0.8);
   font-family: 'Noto Sans KR';
   font-size: 15px;
