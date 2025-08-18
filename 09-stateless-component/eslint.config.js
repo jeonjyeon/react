@@ -9,7 +9,7 @@ import pluginReactHooks from 'eslint-plugin-react-hooks'
 
 export default defineConfig([
   // 'dist' 폴더 전체를 ESLint 검사에서 제외 (빌드된 결과물 무시)
-  globalIgnores(['dist', '.bun']),
+  globalIgnores(['dist']),
 
   {
     // 검사할 파일(src 폴더 내 js,jsx) 패턴 지정
@@ -71,11 +71,11 @@ export default defineConfig([
       // 화살표 함수 본문 스타일
       // - 간결한 표현식 강제
       // - 단일 표현식일 때 중괄호와 return 생략 강제
-      'arrow-body-style': ['error', 'as-needed'],
+      // 'arrow-body-style': ['error', 'as-needed'],
       // 콘솔 사용 제한
       // - 디버깅용 console.log 남용 방지
       // - warn, error만 허용하여 프로덕션 코드 품질 향상
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      // 'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
   },
 ])

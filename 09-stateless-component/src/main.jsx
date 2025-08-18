@@ -1,8 +1,8 @@
 import { createRoot } from 'react-dom/client'
-import App from './app'
+import App from './app/app'
 import './styles/main.css'
 
-const root = document.getElementById('root')
-if (!root) throw new Error('문서에 #root 요소가 존재하지 않습니다.')
+const container = document.getElementById('container')
+if (!container) throw new Error('문서에 #container 요소가 존재하지 않습니다.')
 
-createRoot(root).render(<App />)
+createRoot(container).render(<App />)
