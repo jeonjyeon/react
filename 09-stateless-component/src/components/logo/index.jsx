@@ -4,7 +4,7 @@ import { LOGO_PATHS, LOGO_COLOR } from './constants'
 /**
  * 로고 컴포넌트
  * @param {Object} props - 컴포넌트 속성
- * @param {string} props.type - 로고 타입 (primary | secondary)
+ * @param {'primary' | 'secondary'} [props.type] - 로고 타입 (primary | secondary)
  * @param {boolean} [props.outline] - 아웃라인 여부
  */
 export default function Logo({ type = 'primary', outline = false }) {
@@ -39,6 +39,23 @@ export default function Logo({ type = 'primary', outline = false }) {
     </div>
   )
 }
+
+// --------------------------------------------------------------------------
+// 컴파운드 컴포넌트 패턴
+// --------------------------------------------------------------------------
+// React.Component
+// React.Fragment
+// --------------------------------------------------------------------------
+// Logo.Primary
+// Logo.PrimaryOutline
+// Logo.Secondary
+// Logo.SecondaryOutline
+// --------------------------------------------------------------------------
+
+Logo.Primary = () => <Logo />
+Logo.PrimaryOutline = () => <Logo outline />
+Logo.Secondary = () => <Logo type="secondary" />
+Logo.SecondaryOutline = () => <Logo type="secondary" outline />
 
 // --------------------------------------------------------------------------
 // 로고 타입별 마크업 참고
