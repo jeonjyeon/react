@@ -1,6 +1,7 @@
 body {
   margin: 0;
   min-block-size: 100dvh;
+  background-color: lightgray;
 }
 
 abbr[title] {

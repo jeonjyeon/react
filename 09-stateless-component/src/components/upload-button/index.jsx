@@ -7,8 +7,8 @@ import './style.css'
  * 상태에 따라 다른 아이콘과 텍스트를 표시합니다.
  *
  * @param {Object} props
- * @param {string} props.status - 버튼 상태 ('idle', 'loading', 'resolved', 'rejected')
- * @param {boolean} props.disabled - 버튼 비활성화 여부
+ * @param {string} [props.status] - 버튼 상태 ('idle', 'loading', 'resolved', 'rejected')
+ * @param {boolean} [props.disabled] - 버튼 비활성화 여부
  */
 export default function UploadButton({
   status = UPLOAD_STATUS.IDLE,

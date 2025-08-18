@@ -5,9 +5,9 @@ import './style.css'
  * SVG 아이콘 컴포넌트
  * @param {Object} props
  * @param {string} props.type - 아이콘 타입 ('spinner', 'up-arrow', 'check-mark', 'cross', 'not-allowed')
- * @param {string} props.label - 접근성을 위한 레이블 (비어있을 경우, 표현 이미지 처리)
- * @param {number} props.size - 아이콘 크기
- * @param {string} props.color - 아이콘 색상
+ * @param {string} [props.label] - 접근성을 위한 레이블 (비어있을 경우, 표현 이미지 처리)
+ * @param {number} [props.size] - 아이콘 크기
+ * @param {string} [props.color] - 아이콘 색상
  */
 export default function SvgIcon({
   type = ICON_TYPES.UP_ARROW,
@@ -42,8 +42,8 @@ export default function SvgIcon({
  * Spinner 컴포넌트
  * @param {Object} props
  * @param {string} props.label - 접근성을 위한 레이블 (비어있을 경우, 표현 이미지 처리)
- * @param {number} props.size - 아이콘 크기
- * @param {string} props.color - 아이콘 색상
+ * @param {number} [props.size] - 아이콘 크기
+ * @param {string} [props.color] - 아이콘 색상
  */
 function Spinner({ label, size = 16, color = '#525577' }) {
   const ariaProps = label ? { 'aria-label': label } : { 'aria-hidden': true }
