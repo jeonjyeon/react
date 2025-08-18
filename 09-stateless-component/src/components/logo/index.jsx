@@ -6,8 +6,15 @@ import { LOGO_PATHS, LOGO_COLOR } from './constants'
  * @param {Object} props - 컴포넌트 속성
  * @param {'primary' | 'secondary'} [props.type] - 로고 타입 (primary | secondary)
  * @param {boolean} [props.outline] - 아웃라인 여부
+ * @param {string} [props.className] - 추가 클래스 이름
+ * @param {Object} [props.style] - 인라인 스타일
  */
-export default function Logo({ type = 'primary', outline = false }) {
+export default function Logo({
+  type = 'primary',
+  outline = false,
+  className = '',
+  style,
+}) {
   let path = LOGO_PATHS.NON_OUTLINE
   let color = LOGO_COLOR.PRIMARY
 
@@ -26,17 +33,18 @@ export default function Logo({ type = 'primary', outline = false }) {
   const colorAttr = outline ? { stroke: color } : { fill: color }
 
   return (
-    <div className="logo">
-      <svg
-        width={210}
-        height={57}
-        viewBox="0 0 210 57"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d={path} {...colorAttr} />
-      </svg>
-    </div>
+    <svg
+      role="img"
+      aria-label="넷플릭스(Netflix)"
+      className={`logo ${className}`.trim()}
+      style={style}
+      width={210}
+      height={57}
+      viewBox="0 0 210 57"
+      fill="none"
+    >
+      <path d={path} {...colorAttr} />
+    </svg>
   )
 }
 
@@ -52,10 +60,10 @@ export default function Logo({ type = 'primary', outline = false }) {
 // Logo.SecondaryOutline
 // --------------------------------------------------------------------------
 
-Logo.Primary = () => <Logo />
-Logo.PrimaryOutline = () => <Logo outline />
-Logo.Secondary = () => <Logo type="secondary" />
-Logo.SecondaryOutline = () => <Logo type="secondary" outline />
+Logo.Primary = (props) => <Logo {...props} />
+Logo.PrimaryOutline = (props) => <Logo outline {...props} />
+Logo.Secondary = (props) => <Logo type="secondary" {...props} />
+Logo.SecondaryOutline = (props) => <Logo type="secondary" outline {...props} />
 
 // --------------------------------------------------------------------------
 // 로고 타입별 마크업 참고

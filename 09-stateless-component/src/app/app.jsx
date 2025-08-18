@@ -34,6 +34,10 @@ function LogoDemo() {
       <Logo.PrimaryOutline />
       {/* <Logo type="secondary" outline={true} /> */}
       <Logo.SecondaryOutline />
+
+      {/* 컴포넌트 사용자 정의 스타일 설정(className, style) */}
+      <Logo.Primary className={'jyeon'} />
+      <Logo.PrimaryOutline style={{ marginBlockStart: 100 }} />
     </Demo>
   )
 }
