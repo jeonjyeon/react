@@ -64,6 +64,35 @@ function FunctionalComponentStateDemo() {
     console.log({ age, nextAge })
   }
 
+  const handleTriggleAgeUpdate = () => {
+    // 상태 업데이트 함수를 실행하는 것은
+    // 리액트에게 상태 업데이트 요청
+    // render trigger
+
+    // React
+    // console.log({ age }) // 22
+    // 다음 번 렌더링
+    // setAge(age + 2) // 22 + 2 = 24
+    // setAge(age + 3) // 22 + 3 = 25
+    // setAge(age + 1) // 22 + 1 = 23
+
+    setAge((currentAge) => currentAge + 2) // 22 + 2 = 24
+    setAge((currentAge) => currentAge + 3) // 24 + 3 = 27
+    setAge((currentAge) => currentAge + 1) // 27 + 1 = 28
+
+    // queue = [ (22) => 22 + 2, (24) => 24 + 3, (27) => 27 + 1 ]
+
+    // console.log({ age }) // 22
+
+    // JavaScript
+    // let _age = 1
+    // console.log({ _age }) // 1
+    // _age = _age + 1 // 2
+    // _age = _age + 1 // 3
+    // _age = _age + 1 // 4
+    // console.log({ _age }) // 4
+  }
+
   return (
     <LearnSection title="함수형 컴포넌트의 상태 관리" showTitle={false}>
       {/* <UpdateInput label="이름" value="지연" />
@@ -76,6 +105,9 @@ function FunctionalComponentStateDemo() {
       <div style={{ marginBlockStart: 30 }}>
         <button type="button" onClick={handleUpdateAge}>
           {name} {age}
+        </button>
+        <button type="button" onClick={handleTriggleAgeUpdate}>
+          + 3 actions
         </button>
       </div>
     </LearnSection>
