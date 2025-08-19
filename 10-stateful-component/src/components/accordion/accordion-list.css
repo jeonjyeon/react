@@ -1,0 +1,10 @@
+.accordion {
+  width: 342px;
+  height: auto;
+}
+
+dl {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}

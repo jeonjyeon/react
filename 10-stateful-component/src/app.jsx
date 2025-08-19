@@ -1,12 +1,13 @@
 import { LearnSection } from '@/components'
-import AccordionList from './components/accordion/accordion-list'
+import AccordionListClass from './components/accordion/accordion-list'
 import StatefulComponentClass from './components/stateful-component/class'
 import StatefulComponent from './components/stateful-component/functional'
 
 export default function App() {
   return (
     <LearnSection title="상태 있는/없는 컴포넌트 구성" showTitle={false}>
-      <AccordionList />
+      <AccordionListClass onlyOneOpen />
+      <AccordionListClass />
     </LearnSection>
   )
 }
