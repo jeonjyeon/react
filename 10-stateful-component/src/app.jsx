@@ -4,6 +4,7 @@ import {
   AccordionListClass,
   AccordionListFunction,
 } from './components/accordion/accordion-list'
+import { Counter, CounterClass } from './components/counter'
 import StatefulComponentClass from './components/stateful-component/class'
 import StatefulComponent from './components/stateful-component/functional'
 import UpdateInput from './components/update-input'
@@ -31,6 +32,8 @@ function FunctionalComponentObjectTypeStateDemo() {
       title="함수형 컴포넌트의 객체 타입 상태 관리"
       showTitle={false}
     >
+      <CounterClass />
+      <Counter />
       <div className="form-group">
         <label htmlFor="name">이름</label>
         <input
