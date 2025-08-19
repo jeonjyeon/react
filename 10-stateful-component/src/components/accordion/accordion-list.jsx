@@ -1,9 +1,9 @@
 import accordionData from './data.json'
-import { Component } from 'react'
-import { AccordionItem, AccordionItemClass } from './accordion-item'
+import { Component, useState } from 'react'
+import { AccordionItemClass, AccordionItemFunction } from './accordion-item'
 import './accordion-list.css'
 
-export default class AccordionListClass extends Component {
+export class AccordionListClass extends Component {
   // 상태 선언
   // 클래스 필드 구문 활용
   state = {
@@ -62,4 +62,28 @@ export default class AccordionListClass extends Component {
       </div>
     )
   }
+}
+
+export function AccordionListFunction({ onlyOneOpen = false }) {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const handleActiveIndex = (nextActiveIndex) => setActiveIndex(nextActiveIndex)
+
+  return (
+    <div className="accordion">
+      <h2>자주 묻는 질문</h2>
+      <dl>
+        {accordionData.map((item, index) => (
+          <AccordionItemFunction
+            index={index}
+            key={item.id}
+            question={item.question}
+            answer={item.answer}
+            isOpen={activeIndex == index}
+            onActive={handleActiveIndex}
+            onlyOneOpen={onlyOneOpen}
+          />
+        ))}
+      </dl>
+    </div>
+  )
 }

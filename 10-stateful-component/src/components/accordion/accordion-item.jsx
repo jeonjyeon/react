@@ -1,4 +1,4 @@
-import { Component, useState } from 'react'
+import { Component, useEffect, useState } from 'react'
 import './accordion-item.css'
 
 /**
@@ -72,7 +72,7 @@ export class AccordionItemClass extends Component {
 }
 
 /**
- * AccordionItem 컴포넌트
+ * AccordionItemFunction 컴포넌트
  * @param {Object} props - 컴포넌트 props
  * @param {number} props.index - 질문/답변의 인덱스
  * @param {string} props.question - 질문 텍스트
@@ -81,7 +81,7 @@ export class AccordionItemClass extends Component {
  * @param {(nextActiveIndex: number) => void} props.onActive - 아코디언 아이템 열리도록 설정하는 기능
  * @param {boolean} [props.onlyOneOpen=false] - true일 경우 하나의 아코디언 아이템만 열 수 있음
  */
-export function AccordionItem({
+export function AccordionItemFunction({
   index,
   question,
   answer,
@@ -89,18 +89,32 @@ export function AccordionItem({
   onActive,
   onlyOneOpen,
 }) {
-  const classNames = `accordion-item ${isOpen ? 'is-open' : ''}`.trim()
-  const buttonLabel = isOpen ? '닫힘 전환' : '열림 전환'
+  const [open, setOpen] = useState(isOpen)
+
+  // onlyOneOpen이 true일 때, 외부에서 isOpen이 바뀌면 상태 동기화
+  useEffect(() => {
+    if (onlyOneOpen) {
+      setOpen(isOpen)
+    }
+  }, [isOpen, onlyOneOpen])
+
+  const classNames = `accordion-item ${open ? 'is-open' : ''}`.trim()
+  const buttonLabel = open ? '닫힘 전환' : '열림 전환'
+
+  // 오직 하나만 열리도록 처리하는 기능(함수)
   const handleActive = () => onActive?.(index)
+
+  // 각각의 아코디언 아이템을 열고 닫는 기능(함수)
+  const handleToggle = () => setOpen((prev) => !prev)
 
   return (
     <div className={classNames}>
-      <dt onClick={handleActive}>
+      <dt onClick={onlyOneOpen ? handleActive : handleToggle}>
         <button
           className="accordion-question"
           type="button"
           aria-label={buttonLabel}
-          aria-pressed={isOpen}
+          aria-pressed={open}
         >
           {question}
           <img src="/assets/cevron.svg" alt="" />
