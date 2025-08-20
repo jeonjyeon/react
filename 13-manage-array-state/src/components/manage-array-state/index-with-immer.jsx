@@ -5,8 +5,8 @@ import './style.css'
 export default function ManageArrayStateWithImmer() {
   // 실습 코드 작성
   // 1. 초깃값이 ['A', 'B', 'C']인 배열을 상태로 생성
-  const initialArray = ['A', 'B', 'C']
-  const [array, setArray] = useImmer(initialArray)
+  const INITIAL_ARRAY_STATE = ['A', 'B', 'C']
+  const [array, setArray] = useImmer(INITIAL_ARRAY_STATE)
   const maxValue = array.length
 
   // 2. 배열의 첫 번째 요소 제거 기능
@@ -41,7 +41,7 @@ export default function ManageArrayStateWithImmer() {
 
   // 7. 배열을 초깃값으로 되돌릴 수 있는 기능
   const resetArray = () => {
-    setArray(initialArray)
+    setArray(INITIAL_ARRAY_STATE)
   }
 
   // 8. 배열에 있는 모든 `A` 요소를 `H`로 변경할 수 있는 기능
@@ -58,17 +58,21 @@ export default function ManageArrayStateWithImmer() {
   }
 
   // 10. 배열의 원하는 인덱스에 새로운 요소를 추가할 수 있는 기능
-  const [insertValue, setInsertValue] = useState('')
-  const [insertIndex, setInsertIndex] = useState(0)
+  const INITIAL_INSERT_STATE = {
+    index: 0,
+    value: '',
+    z: { y: { k: { p: 0 } } }, // 중첩된 객체의 예시(실제 기능에는 필요 없고, immer의 중첩 상태 관리 연습용)
+  }
+  const [insertState, setInsertState] = useImmer(INITIAL_INSERT_STATE)
+  console.log(insertState.z.y.k.p)
 
   const addAtIndex = () => {
-    if (!insertValue || isNaN(insertIndex)) return
+    if (!insertState.value || isNaN(insertState.index)) return
     const newArray = [...array]
     // array.splice(시작인덱스, 삭제할개수, 추가할값1, 추가할값2, ...)
-    newArray.splice(insertIndex, 0, ...insertValue)
+    newArray.splice(insertState.index, 0, ...insertState.value)
     setArray(newArray)
-    setInsertValue('')
-    setInsertIndex(0)
+    setInsertState(INITIAL_INSERT_STATE)
   }
 
   return (
@@ -127,9 +131,29 @@ export default function ManageArrayStateWithImmer() {
         <input
           type="text"
           placeholder="추가할 값"
-          value={insertValue}
+          value={insertState.value}
           onChange={(e) => {
-            setInsertValue(e.target.value)
+            setInsertState((draft) => {
+              draft.value = e.target.value
+              // useImmer 훅을 사용해 상태를 관리할 경우
+              // immer의 draft 객체를 통해 깊은(중첩된) 상태도 직접 변경할 수 있다는 예시
+              draft.z.y.k.p += 1
+
+              // 리액트의 불변성 유지를 위해 작성해야 할 코드
+              // return {
+              //   ...draft,
+              //   z: {
+              //     ...draft.z,
+              //     y: {
+              //       ...draft.z.y,
+              //       k: {
+              //         ...draft.z.y.k,
+              //         p: draft.z.y.k.p + 1,
+              //       },
+              //     },
+              //   },
+              // }
+            })
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') addAtIndex()
@@ -140,9 +164,13 @@ export default function ManageArrayStateWithImmer() {
           placeholder="인덱스"
           min={0}
           max={maxValue}
-          value={insertIndex}
+          value={insertState.index}
           onChange={(e) => {
-            setInsertIndex(Number(e.target.value))
+            setInsertState((draft) => {
+              draft.index = Number(e.target.value)
+              // immer의 draft 객체를 통해 깊은(중첩된) 상태도 직접 변경할 수 있다는 예시
+              draft.z.y.k.p -= 1
+            })
           }}
         />
         <button type="button" onClick={addAtIndex}>
