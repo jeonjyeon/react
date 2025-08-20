@@ -1,5 +1,4 @@
 import react from '@vitejs/plugin-react'
-
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
@@ -45,7 +44,9 @@ export default defineConfig(({ mode }) => {
       },
     },
     define: {
-      'process.env': env,
+      // 'process.env': env,
+      // 필요한 변수만 추가
+      // 'process.env.VITE_OTHER_KEY': JSON.stringify(env.VITE_OTHER_KEY),
     },
     build: {
       outDir: 'dist',

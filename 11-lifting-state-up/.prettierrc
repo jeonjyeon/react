@@ -17,7 +17,11 @@
     "^react",
     "^[a-zA-Z]",
     "^@/(.*)$",
-    "^\\.[^.]*(?<!\\.css)$",
+    "^\\.\\./(.*)$",
+    "^\\.\\./(.*)/(.*)$",
+    "^\\./(.*)$",
+    "\\.(json|jsx)$",
+    "\\.(png|jpe?g|gif|svg|webp|avif)$",
     "\\.css$"
   ],
   "importOrderSeparation": false,
