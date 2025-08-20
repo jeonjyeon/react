@@ -5,14 +5,15 @@
   line-height: 1;
   border-style: none;
   border-radius: 9999px;
-  background-color: hsl(0, 0%, 90%);
+  background-color: hsl(240 20% 93%);
+  color: hsl(240 17% 10%);
 
   &:hover {
-    background-color: hsl(0, 0%, 85%);
+    background-color: hsl(0 0% 85%);
   }
 
   &:focus-visible {
-    outline: 2px solid hsl(0, 0%, 80%);
+    outline: 2px solid hsl(0 0% 80%);
   }
 
   &:active {

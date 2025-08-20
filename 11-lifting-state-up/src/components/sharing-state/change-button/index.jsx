@@ -14,11 +14,6 @@ export default function ChangeButton() {
   return (
     <button type="button" className="change-button" onClick={handleClick}>
       {emotions[randomIndex].message}
-      <img
-        src={`/assets/emotions/${emotions[randomIndex].key}.jpg`}
-        alt=""
-        height={20}
-      />
     </button>
   )
 }
