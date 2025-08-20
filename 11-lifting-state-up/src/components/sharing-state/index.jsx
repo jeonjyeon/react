@@ -8,14 +8,13 @@ import { EmotionFigure } from './emotions'
 const getRandomIndex = () => getRandom(emotions.length)
 
 export default function SharingState() {
-  const [randomIndex, setRandomIndex] = useState(getRandomIndex)
+  const [randomIndex, setRandomIndex] = useState(getRandomIndex())
   const emotionInfo = emotions[randomIndex]
 
   const handleChangeRandomIndex = () => setRandomIndex(getRandomIndex())
-
   return (
     <LearnSection title="다른 컴포넌트와 상태 공유하기" showTitle={false}>
-      <EmotionFigure />
+      <EmotionFigure info={emotionInfo} />
       <ChangeButton
         message={emotionInfo.message}
         onUpdate={handleChangeRandomIndex}
