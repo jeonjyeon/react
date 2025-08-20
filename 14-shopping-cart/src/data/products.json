@@ -5,6 +5,7 @@
     "size": "900mL",
     "price": 1880,
     "quantity": 1,
+    "maxQuantity": 5,
     "imageUrl": "milk.jpg",
     "category": "유제품"
   },
@@ -14,6 +15,7 @@
     "size": "500g",
     "price": 1280,
     "quantity": 1,
+    "maxQuantity": 3,
     "imageUrl": "bean-sprouts.jpg",
     "category": "채소"
   },
@@ -23,6 +25,7 @@
     "size": "1kg",
     "price": 2280,
     "quantity": 1,
+    "maxQuantity": 10,
     "imageUrl": "tofu.jpg",
     "category": "두부/콩제품"
   }
