@@ -1,10 +1,32 @@
 import { useState } from 'react'
 import { LearnSection } from '@/components'
 import LifeCycleDemo from './components/lifecycle/class'
+import Practice from './components/lifecycle/practice'
 
 export default function App() {
   console.log('App 렌더링')
+  const [isShown, setIsShown] = useState(false)
 
+  return (
+    <section className="border-2 bg-indigo-700 text-white p-5">
+      <h1 className="text-xl font-extrabold">App 컴포넌트</h1>
+      <label className="block my-2">
+        <input
+          type="checkbox"
+          checked={isShown}
+          onChange={() => setIsShown((is) => !is)}
+        />{' '}
+        Practice {!isShown ? '마운트' : '언마운트'}
+      </label>
+
+      {isShown && <Practice />}
+    </section>
+  )
+}
+
+/* -------------------------------------------------------------------------- */
+
+function LearnClassComponentLifecycle() {
   const [description, setDescription] = useState(
     '라이프사이클은 특정 단계의 변화를 말합니다.'
   )
@@ -34,8 +56,6 @@ export default function App() {
     </>
   )
 }
-
-/* -------------------------------------------------------------------------- */
 
 function LearnComponentLifecycle() {
   const [isVisible, setIsVisible] = useState(true)
