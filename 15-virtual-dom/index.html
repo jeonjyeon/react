@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>리액트 템플릿 (Bun + Vite)</title>
+    <meta name="description" content="리액트 템플릿 (Bun + Vite)" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
+      crossorigin
+    />
+    <link rel="icon" href="/react.svg" type="image/xml+svg" />
+    <script type="module" src="./src/main.jsx"></script>
+  </head>
+  <body>
+    <noscript>
+      이 사이트를 이용하려면?<br />
+      사용 중인 웹 브라우저에서 JavaScript를 활성화 해야 합니다.
+    </noscript>
+
+    <div id="todo-list"></div>
+    <script>
+      {
+        const todos = []
+        const DELAY = 200
+
+        updateListItem(30)
+
+        function updateListItem(count) {
+          if (count === 0) return
+          todos.push({ text: todos.length + 1, completed: true })
+          updateList()
+
+          setTimeout(() => {
+            updateListItem(--count)
+          }, DELAY)
+        }
+
+        // 실제 DOM 직접 조작 - 비효율적
+        function updateList() {
+          const list = document.getElementById('todo-list')
+
+          // 매번 전체 리스트를 다시 생성
+          list.innerHTML = ''
+
+          todos.forEach((todo) => {
+            const li = document.createElement('li')
+            li.textContent = todo.text
+            li.className = todo.completed ? 'completed' : ''
+            list.appendChild(li) // 각 요소마다 DOM 조작 발생
+          })
+
+          // 브라우저는 매번 레이아웃 재계산과 리페인트를 수행
+        }
+      }
+    </script>
+  </body>
+</html>
