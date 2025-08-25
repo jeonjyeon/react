@@ -1,9 +1,16 @@
 import { useState } from 'react'
 import { LearnSection } from '@/components'
+import LifeCycleDemo from './components/lifecycle/class'
 
 export default function App() {
   console.log('App 렌더링')
 
+  return <LifeCycleDemo desc="라이프사이클은 특정단계의 변화를 말합니다." />
+}
+
+/* -------------------------------------------------------------------------- */
+
+function LearnComponentLifecycle() {
   const [isVisible, setIsVisible] = useState(true)
   const handleInput = (e) => setIsVisible(e.target.checked)
 
