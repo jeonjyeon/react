@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { LearnSection } from '@/components'
+import Parent from '@/components/virtual-dom/parent'
 
 const INITIAL_TODOS = [
   {
@@ -17,6 +18,7 @@ export default function App() {
   // 컴포넌트 렌더링 -> 리액트 엘리먼트 트리
   const reactElementTree = (
     <LearnSection title="가상(Virtual) DOM 작동 방식 이해" className="p-10">
+      <Parent />
       <button
         type="button"
         onClick={() => setCount((c) => c + 2)}
