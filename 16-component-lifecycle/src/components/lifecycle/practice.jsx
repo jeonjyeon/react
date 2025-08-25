@@ -26,14 +26,15 @@ export default class PracticePart2 extends Component {
     return null
   }
 
-  shouldComponentUpdate(nextProps) {
-    console.log('업데이트될 속성', { nextProps })
-    console.log('현재 속성', { currentProps: this.props })
+  shouldComponentUpdate(nextProps, _nextState) {
+    // console.log('업데이트될 속성', { nextProps })
+    // console.log('현재 속성', { currentProps: this.props })
 
     const tryRender = nextProps.email !== this.props.email
-    console.log('렌더링을 할까요?', tryRender)
+    console.log('렌더링을 할까요?', tryRender ? '네' : '아니오')
+    return tryRender ? true : false
 
-    return true // 렌더링 ✅
+    // return true // 렌더링 ✅
     // return false // 렌더링 ❌
   }
 
@@ -54,6 +55,14 @@ export default class PracticePart2 extends Component {
         </button>
       </section>
     )
+  }
+
+  componentDidMount() {
+    console.log('Practice 마운트')
+  }
+
+  componentWillUnmount() {
+    console.log('Practice 언마운트')
   }
 }
 

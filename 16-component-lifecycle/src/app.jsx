@@ -13,7 +13,7 @@ export default function App() {
   const emailId = `${id}-email`
 
   return (
-    <section className="border-2 bg-indigo-700 text-white p-5">
+    <section className="border-2 bg-indigo-700 text-white p-5 h-screen">
       <div className="flex gap-2 items-center mt-2.5 mb-4">
         <h1 className="text-xl font-extrabold">{title}</h1>
         <button
