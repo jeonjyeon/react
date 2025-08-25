@@ -7,12 +7,23 @@ export default function App() {
   console.log('App 렌더링')
   const [isShown, setIsShown] = useState(false)
   const [email, setEmail] = useState('yamoo9@naver.com')
+  const [title, setTitle] = useState('App 컴포넌트')
+
   const id = useId()
   const emailId = `${id}-email`
 
   return (
     <section className="border-2 bg-indigo-700 text-white p-5">
-      <h1 className="text-xl font-extrabold">App 컴포넌트</h1>
+      <div className="flex gap-2 items-center mt-2.5 mb-4">
+        <h1 className="text-xl font-extrabold">{title}</h1>
+        <button
+          type="button"
+          className="button"
+          onClick={() => setTitle((t) => '⚛️' + t)}
+        >
+          타이틀 변경
+        </button>
+      </div>
       <div role="group" className="flex flex-col gap-2 my-3">
         <label htmlFor={emailId} className="sr-only">
           이메일
