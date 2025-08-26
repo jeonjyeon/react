@@ -1,5 +1,84 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { LearnSection } from '@/components'
+
+export default function App() {
+  // 클래스 컴포넌트의 "자주 사용되는 라이프사이클 메서드" 실습을 이펙트 훅으로 재현
+
+  // - 마운트 감지 : 컴포넌트가 마운트될 때 "마운트" 출력
+  useEffect(() => {
+    console.log('마운트')
+  }, [])
+
+  // - 렌더링 추적 : 컴포넌트가 리렌더링될 때마다 "렌더링" 출력
+  console.log('렌더링')
+
+  // - 상태 업데이트 감지 : 상태가 변경될 때마다 "변경된 상태 값" 출력
+  const [title, setTitle] = useState('실습')
+
+  // - 문서 제목 업데이트 : 상태가 변경될 때마다 문서의 제목 값을 동적으로 변경
+  useEffect(() => {
+    document.title = title
+  }, [title])
+
+  // - 라이프사이클 클린업 : 설정된 이벤트 리스닝 또는 타이머 등 정리(cleanup)
+  const [isShown, setIsShown] = useState(false)
+  const checkboxId = useId()
+
+  return (
+    <LearnSection
+      title={title}
+      showTitle
+      className="p-10 flex flex-col gap-4 text-indigo-600"
+    >
+      <button
+        type="button"
+        className="button "
+        onClick={() => setTitle((t) => t + '!')}
+      >
+        상태 변경
+      </button>
+      <div role="group">
+        <input
+          type="checkbox"
+          id={checkboxId}
+          checked={isShown}
+          onChange={(e) => setIsShown(e.target.checked)}
+        />
+        <label htmlFor={checkboxId}>Paragraph 마운트/언마운트</label>
+      </div>
+      {isShown && <Paragraph />}
+    </LearnSection>
+  )
+}
+
+function Paragraph() {
+  useEffect(() => {
+    console.log('Paragraph 마운트')
+
+    // 이벤트 리스너 추가
+    const handleClick = () => {
+      console.log('문서 클릭')
+    }
+
+    console.log('Paragraph 이펙트 함수 실행됨')
+    document.addEventListener('click', handleClick)
+
+    const timerId = setInterval(() => {
+      console.count('count')
+    }, 1000)
+
+    // - 라이프사이클 클린업 : 설정된 이벤트 리스닝 또는 타이머 등 정리(cleanup)
+    return () => {
+      document.removeEventListener('click', handleClick)
+      clearInterval(timerId)
+      console.log('Paragraph 언마운트')
+    }
+  }, [])
+
+  return <p>예시 단락 예시 단락</p>
+}
+
+// -----------------------------------------------
 
 // 1. 생성 (상태 초기화 : 지연된...)
 const getInitialCount = () => {
@@ -12,7 +91,7 @@ const getInitialCount = () => {
   return 1
 }
 
-export default function App() {
+function EffectLifecycleDemo() {
   const [count, setCount] = useState(getInitialCount)
 
   useEffect(
@@ -63,7 +142,7 @@ function ReferenceIdentityDemo() {
     return () => clearInterval(clearId)
   }, [])
 
-  // 객체를 넘겨줄 때는 구성이 같아도, 리렌더링되면 참조가 잘라지기 때문에
+  // 객체를 넘겨줄 때는 구성이 같아도, 리렌더링되면 참조가 달라지기 때문에
   // 새로 만들어진 객체는 이전 객체와 다른 것으로 간주한다.
   // 따라서 매번 새로운 배열을 생성하게 된다.
   const numbers = [1, 2, 3]
