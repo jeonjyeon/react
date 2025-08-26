@@ -1,7 +1,61 @@
 import { useEffect, useId, useState } from 'react'
 import { LearnSection } from '@/components'
+import { tw } from './utils'
 
 export default function App() {
+  // const [width, setWidth] = useState(globalThis.innerWidth)
+  // const [height, setHeight] = useState(globalThis.innerHeight)
+  const [dimension, setDimension] = useState({ width: 0, height: 0 })
+
+  useEffect(() => {
+    const handleResize = () => {
+      // React 18+
+      // Batch Update (한번에 여러 상태 업데이트 처리)
+      // setWidth(globalThis.innerWidth)
+      // setHeight(globalThis.innerHeight)
+
+      setDimension({
+        width: globalThis.innerWidth,
+        height: globalThis.innerHeight,
+      })
+    }
+
+    globalThis.addEventListener('resize', handleResize)
+
+    // 마운트 이후, 리사이즈 실행 (상태 업데이트 -> 화면 변경)
+    handleResize()
+
+    return () => {
+      globalThis.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  const { width, height } = dimension
+
+  return (
+    <LearnSection title="추가 실습" showTitle>
+      <output
+        className={tw(
+          'block',
+          'max-w-4xl mx-auto mt-5 p-3',
+          'rounded-xl',
+          'bg-black text-amber-500',
+          'text-2xl text-center'
+        )}
+      >
+        {width} x {height}
+      </output>
+      <p className="mt-3">
+        뷰포트 크기를 조정할 때마다 너비(width)와 높이(height) 정보를 화면에
+        출력하는 이펙트를 추가합니다.
+      </p>
+    </LearnSection>
+  )
+}
+
+// -----------------------------------------------
+
+function UseEffectPractice() {
   // 클래스 컴포넌트의 "자주 사용되는 라이프사이클 메서드" 실습을 이펙트 훅으로 재현
 
   // - 마운트 감지 : 컴포넌트가 마운트될 때 "마운트" 출력
