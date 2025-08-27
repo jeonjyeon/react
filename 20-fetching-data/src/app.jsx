@@ -3,6 +3,160 @@ import { LearnSection } from '@/components'
 import { wait } from './utils'
 
 export default function App() {
+  const [userId, setUserId] = useState(1)
+  const userInputId = useId()
+  const isUserInputDisabled = userId === 1 || userId === 20
+
+  return (
+    <LearnSection title="데이터 가져오기(fetching data)" showTitle>
+      <div role="group" className="my-5">
+        <label htmlFor={userInputId} className="mr-2">
+          사용자
+        </label>
+        <input
+          type="number"
+          className="input disabled:cursor-not-allowed"
+          aria-disabled={isUserInputDisabled}
+          id={userInputId}
+          value={userId}
+          onChange={(e) => {
+            const nextUserId = Number(e.target.value)
+            setUserId(nextUserId)
+          }}
+          min={1}
+          max={20}
+        />
+      </div>
+      <User userId={userId} />
+    </LearnSection>
+  )
+}
+
+function User({ userId }) {
+  const [state, setState] = useState({
+    loading: false,
+    error: null,
+    data: null,
+  })
+
+  useEffect(() => {
+    console.log(`Users ${userId} 렌더링`)
+    const abortController = new AbortController()
+    const fetchOptions = { signal: abortController.signal }
+
+    // 데이터 가져오기
+    fetch(`http://localhost:4000/users/${userId}`, fetchOptions)
+      .then((response) => {
+        if (!response.ok && response.status === 404) {
+          // throw new Error(response.statusText)
+          throw new Error(
+            `요청된 사용자 ${userId}는 존재하지 않는 리소스입니다.`
+          )
+        }
+        setState((prevState) => ({
+          ...prevState,
+          loading: true,
+          error: null,
+        }))
+        return response.json()
+      })
+      .then((responseData) => {
+        console.log('데이터 가져오기 -> data 상태 업데이트')
+        setState((prevState) => ({
+          ...prevState,
+          data: responseData,
+        }))
+      })
+      .catch((error) => {
+        if (error.name === 'AbortError') return
+        setState((prevState) => ({
+          ...prevState,
+          error,
+        }))
+      })
+      .finally(() => {
+        console.log(`Users ${userId} 렌더링 종료`)
+        setState((prevState) => ({
+          ...prevState,
+          loading: false,
+        }))
+      })
+
+    return () => {
+      // 중복된(이전) 요청 취소
+      abortController.abort()
+    }
+  }, [userId])
+
+  if (state.loading) {
+    return (
+      <div
+        role="status"
+        aria-live="polite"
+        className="text-slate-400 text-xl font-extrabold"
+      >
+        사용자 "{userId}" 데이터 로딩 중...
+      </div>
+    )
+  }
+
+  if (state.error) {
+    return (
+      <div
+        role="alert"
+        aria-live="assertive"
+        className="text-red-600 text-xl font-extrabold"
+      >
+        {state.error.name.toUpperCase()} {state.error.message}
+      </div>
+    )
+  }
+
+  return (
+    <table className="min-w-[320px] border border-gray-300 rounded overflow-hidden bg-white">
+      <tbody>
+        <tr className="border-b last:border-b-0">
+          <th className="px-4 py-2 text-left bg-gray-50 font-semibold text-gray-700 w-32">
+            ID
+          </th>
+          <td className="px-4 py-2">{state.data?.id}</td>
+        </tr>
+        <tr className="border-b last:border-b-0">
+          <th className="px-4 py-2 text-left bg-gray-50 font-semibold text-gray-700">
+            Name
+          </th>
+          <td className="px-4 py-2">{state.data?.name}</td>
+        </tr>
+        <tr className="border-b last:border-b-0">
+          <th className="px-4 py-2 text-left bg-gray-50 font-semibold text-gray-700">
+            Username
+          </th>
+          <td className="px-4 py-2">{state.data?.username}</td>
+        </tr>
+        <tr className="border-b last:border-b-0">
+          <th className="px-4 py-2 text-left bg-gray-50 font-semibold text-gray-700">
+            Email
+          </th>
+          <td className="px-4 py-2">{state.data?.email}</td>
+        </tr>
+        <tr>
+          <th className="px-4 py-2 text-left bg-gray-50 font-semibold text-gray-700">
+            Address
+          </th>
+          <td className="px-4 py-2">
+            {state.data?.address
+              ? `${state.data.address.city}, ${state.data.address.suite}, ${state.data.address.zipcode}`
+              : ''}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  )
+}
+
+// --------------------------------------------------------------------------
+
+function FetchDataDemo() {
   console.log('App 렌더링')
 
   const [key, setKey] = useState(0)
