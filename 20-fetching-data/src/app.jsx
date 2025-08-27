@@ -42,15 +42,170 @@ export default function App() {
         </button>
         <output>렌더링 키: {key}</output>
       </div>
-      <AlbumAbortDemo id={albumId} />
+      <AlbumAsyncIIFEDemo id={albumId} />
     </LearnSection>
   )
 }
 
 const ALBUM_API_URL = 'https://jsonplaceholder.typicode.com/albums'
 
+// 비동기 함수 + IIFE 패턴 데모
+function AlbumAsyncIIFEDemo({ id }) {
+  console.log(`Album ${id} 렌더링`)
+
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    const abortController = new AbortController()
+    const fetchOptions = { signal: abortController.signal }
+
+    // 즉시 실행 함수 표현식(IIFE) 패턴
+    // 1회성 호출(소비) -> 재사용 가능성이 적다.
+    // 한 번만 호출하면 된다. -> 즉시 실행하자!
+    ;(async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        await wait(0.9)
+
+        const response = await fetch(ALBUM_API_URL + '/' + id, fetchOptions)
+
+        if (!response.ok && response.status === 404) {
+          throw new Error('API 요청에 따른 응답된 데이터를 찾을 수 없습니다.')
+        }
+
+        const responseData = await response.json()
+        console.log('데이터 가져오기 -> data 상태 업데이트')
+        setData(responseData)
+      } catch (error) {
+        if (error.name === 'AbortError') return
+        setError(error)
+      } finally {
+        setLoading(false)
+      }
+    })()
+
+    return () => {
+      abortController.abort()
+    }
+  }, [id])
+
+  if (loading) {
+    return (
+      <p
+        role="status"
+        aria-live="polite"
+        className="text-indigo-300 font-semibold text-2xl"
+      >
+        로딩 중...
+      </p>
+    )
+  }
+
+  if (error) {
+    return (
+      <p
+        role="alert"
+        aria-live="assertive"
+        className="text-red-600 font-semibold text-2xl"
+      >
+        오류 발생!! {error.message}
+      </p>
+    )
+  }
+
+  return (
+    <p className="text-indigo-600 font-semibold text-2xl">
+      앨범 타이틀 : {data?.id ?? 0} | {data?.title ?? 'Album Title'}
+    </p>
+  )
+}
+
 // --------------------------------------------------------------------------
-// 중복 요청 제거 데모
+// 비동기(async) 함수 데모
+
+// 클라이언트 환경에서 렌더링되는
+// 리액트 컴포넌트는 항상 동기 방식으로 작동되어야 함
+function AlbumAsyncDemo({ id }) {
+  console.log(`Album ${id} 렌더링`)
+
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    const abortController = new AbortController()
+    const fetchOptions = { signal: abortController.signal }
+
+    // 비동기 함수로 작성 (Promise 대신)
+    // 비동기 함수 내에서 오류를 캐치하려면? - try ... catch
+    async function fetchAlbum() {
+      try {
+        setLoading(true)
+        setError(null)
+
+        // 느린 네트워크 시뮬레이션
+        await wait(0.9)
+
+        const response = await fetch(ALBUM_API_URL + '/' + id, fetchOptions)
+
+        if (!response.ok && response.status === 404) {
+          throw new Error('API 요청에 따른 응답된 데이터를 찾을 수 없습니다.')
+        }
+
+        const responseData = await response.json()
+        console.log('데이터 가져오기 -> data 상태 업데이트')
+        setData(responseData)
+      } catch (error) {
+        if (error.name === 'AbortError') return
+        setError(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchAlbum()
+
+    return () => {
+      abortController.abort()
+    }
+  }, [id])
+
+  if (loading) {
+    return (
+      <p
+        role="status"
+        aria-live="polite"
+        className="text-indigo-300 font-semibold text-2xl"
+      >
+        로딩 중...
+      </p>
+    )
+  }
+
+  if (error) {
+    return (
+      <p
+        role="alert"
+        aria-live="assertive"
+        className="text-red-600 font-semibold text-2xl"
+      >
+        오류 발생!! {error.message}
+      </p>
+    )
+  }
+
+  return (
+    <p className="text-indigo-600 font-semibold text-2xl">
+      앨범 타이틀 : {data?.id ?? 0} | {data?.title ?? 'Album Title'}
+    </p>
+  )
+}
+
+// --------------------------------------------------------------------------
+// 이전 요청 중단(abort) 데모
 // - 중단(Abort) 컨트롤러 활용
 // - AbortController 클래스
 // - AbortController 인스턴스 생성 (예: const controller = new AbortController())
@@ -135,7 +290,7 @@ function AlbumAbortDemo({ id }) {
 }
 
 // --------------------------------------------------------------------------
-// 이전 요청 무시 데모
+// 이전 요청 무시(ignore) 데모
 
 function AlbumIgnoreDemo({ id }) {
   console.log(`Album ${id} 렌더링`)
