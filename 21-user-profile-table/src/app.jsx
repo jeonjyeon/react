@@ -1,10 +1,10 @@
 import { LearnSection } from '@/components'
-import RandomCountUp from '@/demo/app'
+import UserProfileTable from './components/user-profile-table'
 
 export default function App() {
   return (
-    <LearnSection title="랜덤 카운트 업">
-      <RandomCountUp />
+    <LearnSection title="사용자 프로필 테이블 실습" showTitle={false}>
+      <UserProfileTable />
     </LearnSection>
   )
 }
