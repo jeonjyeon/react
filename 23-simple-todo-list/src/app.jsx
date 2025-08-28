@@ -1,5 +1,5 @@
 import { LearnSection } from '@/components'
-import SimpleTodoList from './components/todo-list'
+import SimpleTodoList from './components/simple-todo-list'
 
 export default function App() {
   return (
