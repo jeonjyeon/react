@@ -9,3 +9,4 @@
 @import './common/_animation.css' layer(utilities);
 @import './components/_button.css' layer(components);
 @import './components/_input.css' layer(components);
+@import './components/tailwind.css' layer(components);

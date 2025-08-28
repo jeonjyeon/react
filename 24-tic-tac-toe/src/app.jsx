@@ -1,10 +1,10 @@
 import { LearnSection } from '@/components'
-import RandomCountUp from '@/demo/app'
+import TicTacToe from '@/components/tic-tac-toe'
 
 export default function App() {
   return (
-    <LearnSection title="랜덤 카운트 업">
-      <RandomCountUp />
+    <LearnSection title="틱택토(TicTacToe)" showTitle={false}>
+      <TicTacToe />
     </LearnSection>
   )
 }
