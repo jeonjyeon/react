@@ -6,7 +6,7 @@
 }
 
 .Status {
-  @apply text-xl;
+  @apply text-xl mb-2;
 }
 
 .Squares {
@@ -25,7 +25,6 @@
   @apply transition-colors duration-400 ease-out;
   @apply focus:z-50 focus:outline-0 focus:bg-slate-100;
   @apply focus-visible:outline-3 outline-black -outline-offset-3;
-  @apply transition-colors duration-400 ease-out;
 
   &[aria-disabled='true'] {
     @apply cursor-not-allowed bg-slate-100;
@@ -34,7 +33,7 @@
 
 .History {
   @apply min-w-25;
-  @apply mt-14.5;
+  @apply mt-8.5;
 }
 
 .HistoryList {
