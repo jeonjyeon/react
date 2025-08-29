@@ -81,9 +81,53 @@ function SquaresGrid() {
     setSquares(nextSquares)
   }
 
+  const handleKeyControls = (e) => {
+    const { target, key } = e
+    // 사용자가 기본적으로 탐색하는데 사용하는
+    // Tab, Enter, SpaceBar 키를 눌렀을 때는
+    // 브라우저의 기본 작동대로 처리
+    if (key === 'Tab' || key === 'Enter' || key === ' ' /* SpaceBar */) return
+
+    // 위에 나열된 키 외에는 브라우저 기본 작동 방지
+    // ArrowLeft, ArrowRight, ArrowUp, ArrowDown, Escape
+    e.preventDefault()
+
+    // 이벤트 대상(target)으로부터
+    // 현재 초점이 이동된 그리드 셀의 행/열 순서(인덱스) 값 가져오기
+    let rowIndex = Number(target.getAttribute('aria-rowindex'))
+    let colIndex = Number(target.getAttribute('aria-colindex'))
+
+    switch (key) {
+      case 'ArrowRight':
+        if (colIndex <= GRID.COLS) colIndex += 1
+        break
+      case 'ArrowLeft':
+        if (colIndex > 1) colIndex -= 1
+        break
+      case 'ArrowUp':
+        if (rowIndex > 1) rowIndex -= 1
+        break
+      case 'ArrowDown':
+        if (colIndex <= GRID.ROWS) rowIndex += 1
+        break
+      case 'Escape':
+        console.log('Esc')
+        break
+    }
+
+    const grid = target.closest('[role="grid"]')
+    const focusGridCell = grid.querySelector(
+      `[aria-rowindex="${rowIndex}"][aria-colindex="${colIndex}"]`
+    )
+
+    focusGridCell?.focus()
+  }
+
   return (
     <div
       role="grid"
+      tabIndex={-1}
+      onKeyDown={handleKeyControls}
       className="Squares"
       aria-label="틱택토 게임판"
       aria-rowcount={GRID.ROWS}
