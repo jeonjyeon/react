@@ -42,25 +42,31 @@ export default function App() {
     <LearnSection title="DOM 참조" showTitle={false}>
       <Demo />
 
-      <div className="paragraphes">
+      <div className="paragraphes space-y-2 [&_p]:text-gray-700 [&_p]:font-semibold">
         {attach && (
-          // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
-          <p
-            onClick={() => {
-              setAttach((a) => !a)
-              clearInterval(intervalRef.current)
-            }}
-            // 1. ref callback demo
-            // ref={refCallback}
-            // 2. useRef + useEffect demo
-            ref={pRef}
-            className="focus:outline-8 outline-offset-2 outline-blue-500/40"
-          >
-            one
-          </p>
+          <div className="bg-amber-300 p-5 pt-2.5 my-2">
+            <p
+              // 1. ref callback demo
+              // ref={refCallback}
+              // 2. useRef + useEffect demo
+              ref={pRef}
+              className="focus:outline-16 outline-offset-4 outline-blue-500/40"
+            >
+              하나
+            </p>
+            <button
+              className="button mt-2"
+              onClick={() => {
+                setAttach((a) => !a)
+                clearInterval(intervalRef.current)
+              }}
+            >
+              토글
+            </button>
+          </div>
         )}
-        <p>two</p>
-        <p>thtree</p>
+        <p>둘</p>
+        <p>셋</p>
       </div>
     </LearnSection>
   )
@@ -87,19 +93,23 @@ function Demo() {
 
   return (
     <article ref={articleRef}>
-      <h2>아티클</h2>
-      <div ref={divRef} className="paragraphes">
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim?</p>
+      <h2 className="text-4xl font-thin text-indigo-800">아티클</h2>
+      <div
+        ref={divRef}
+        className="paragraphes my-4 text-base leading-relaxed text-indigo-900"
+      >
+        <p>리액트에서 ref는 DOM 요소에 직접 접근할 때 사용합니다.</p>
         <p>
-          Quaerat iusto optio quae accusantium autem! Impedit, possimus soluta!
+          useRef 훅은 렌더링 사이에 값을 유지하고 DOM에 접근하는 용도로
+          활용됩니다.
         </p>
         <p>
-          Voluptate exercitationem sint magnam repellendus illo quos aliquam
-          recusandae.
+          ref callback은 DOM 요소가 마운트되거나 언마운트될 때 특정 로직을
+          실행할 수 있게 해줍니다.
         </p>
         <p>
-          Sapiente voluptatum consectetur porro, atque quos doloribus.
-          Laudantium, placeat.
+          useRef와 useEffect를 함께 사용하면 DOM 요소에 접근하여 포커스 설정이나
+          측정 등의 작업을 수행할 수 있습니다.
         </p>
       </div>
     </article>
