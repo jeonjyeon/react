@@ -1,6 +1,8 @@
 import { wait } from '@/utils'
 import { fetchData, makeEndpoint } from './utils'
 
+// 상위 폴더인 REACT에 있는 api-server를 구동 시켜야 함.
+
 // makeEndpoint 커링 함수를 사용해 API 호출 함수 생성
 const api = makeEndpoint('http://localhost:4000')
 
@@ -22,5 +24,6 @@ export const fetchDataByQuery = async (query, options = {}) => {
       item.user = user
     }
   }
+
   return postData
 }

@@ -7,6 +7,7 @@ import SearchController from './search-controller'
 import SearchForm from './search-form'
 import SearchList from './search-list'
 import Status from './status'
+import { getQueryFromLocation, queryPushInHistory } from './utils'
 
 export default function SearchQueryDemo() {
   const [loading, setLoading] = useState(false)
@@ -15,12 +16,27 @@ export default function SearchQueryDemo() {
 
   // 검색 쿼리 초깃값을 현재 URL의 q 파라미터에서 가져오도록 설정
   // 참고: https://developer.mozilla.org/ko/docs/Web/API/URLSearchParams
-  const [query, setQuery] = useState('')
 
-  // 브라우저 이전/다음 탐색 시, 검색 쿼리 동기화
+  // useEffect 훅을 사용해 마운트 이후, 브라우저 로케이션의 쿼리 스트링 값을 읽어서 리액트 앱과 동기화
+  // useState 훅에 초기화 함수(동기적으로 작동)를 사용하면 useEffect 훅을 사용하지 않아도 됩니다.
+  // /?q=열정
+  // /?q=도전
+  // /?q=사랑
+  // /?q=성공
+  // /?q=실패
+
+  const [query, setQuery] = useState(getQueryFromLocation)
+
+  // 브라우저의 뒤로가기/앞으로 가기 버튼을 눌렀을 때(히스토리 이동에 반응해, 리액트 앱과 동기화)
   // 참고: https://developer.mozilla.org/ko/docs/Web/API/Window/popstate_event
   useEffect(() => {
-    // ...
+    const handler = () => setQuery(getQueryFromLocation())
+
+    globalThis.addEventListener('popstate', handler)
+
+    return () => {
+      globalThis.removeEventListener('popstate', handler)
+    }
   }, [])
 
   // API에서 데이터 가져오기
@@ -31,7 +47,24 @@ export default function SearchQueryDemo() {
 
     fetchDataByQuery(query, { signal: abortController.signal })
       .then((result) => {
-        setData(Array.isArray(result) ? result : [])
+        // 데이터 필터링 추가
+        const filtered = Array.isArray(result)
+          ? result.filter((item) => {
+              // 기본: title/body에 검색어 포함
+              const inPost =
+                item.title.includes(query) || item.body.includes(query)
+              // user 정보가 있을 때: name/email/company.name에 검색어 포함
+              const inUser =
+                item.user &&
+                (
+                  item.user.name +
+                  item.user.email +
+                  (item.user.company?.name || '')
+                ).includes(query)
+              return inPost || inUser
+            })
+          : []
+        setData(filtered)
       })
       .catch((error) => setError(error))
       .finally(() => setLoading(false))
@@ -49,10 +82,13 @@ export default function SearchQueryDemo() {
     const nextQuery = formData.get('search')
 
     // URL 변경 시, query 상태 업데이트
+    // JavaScript를 사용해 URL을 바꿀 때(사용자 액션에 반응해, 히스토리에 푸시)
     // 참고
     // - https://developer.mozilla.org/ko/docs/Web/API/History/pushState
     // - https://developer.mozilla.org/ko/docs/Web/API/URL/URL
     // ...
+
+    queryPushInHistory(nextQuery)
     setQuery(nextQuery)
   }
 
@@ -60,6 +96,7 @@ export default function SearchQueryDemo() {
   const handleSearch = (nextQuery) => {
     // URL 변경 시, query 상태 업데이트
     // ...
+    queryPushInHistory(nextQuery)
     setQuery(nextQuery)
   }
 
