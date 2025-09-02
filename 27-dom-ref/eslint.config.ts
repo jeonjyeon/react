@@ -1,3 +1,4 @@
+// @ts-nocheck
 import js from '@eslint/js'
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y'
 import pluginPrettierRecommand from 'eslint-plugin-prettier/recommended'
@@ -6,6 +7,7 @@ import pluginReactHooks from 'eslint-plugin-react-hooks'
 import pluginReactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import globals from 'globals'
+import path from 'node:path'
 import tseslint from 'typescript-eslint'
 
 export default defineConfig([
@@ -34,7 +36,26 @@ export default defineConfig([
     },
   },
 
-  tseslint.configs.recommended,
+  // 구성 파일에는 타입 검사를 적용하지 않음
+  {
+    files: ['eslint.config.ts', 'vite.config.ts', '*.config.ts', '*.config.js'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+
+  // 소스 코드에만 TypeScript 타입 검사 적용
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    ...tseslint.configs.recommended,
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir: path.resolve(process.cwd()),
+        project: ['./tsconfig.json'],
+      },
+    },
+  },
+
   pluginReact.configs.flat['jsx-runtime'],
   pluginReactHooks.configs['recommended-latest'],
   pluginJsxA11y.flatConfigs.recommended,

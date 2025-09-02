@@ -13,7 +13,7 @@ export default function App() {
 // --------------------------------------------------------------------------
 
 function DOMRefDemo() {
-  const [attach, setAttach] = useState(true)
+  const [attach, setAttach] = useState<boolean>(true)
 
   const pRef = useRef(null)
   const intervalRef = useRef()
