@@ -1,15 +1,13 @@
 export const makeEndpoint = (endpoint) => (path) => `${endpoint}/${path}`
 
 export const getQueryFromLocation = () => {
-  const params = Object.fromEntries(
-    new URLSearchParams(globalThis.location.search)
-  )
-  return params.q ?? ''
+  const searchParams = new URLSearchParams(globalThis.location.search)
+  return searchParams.get('q') ?? ''
 }
 
 export const queryPushInHistory = (nextQuery) => {
-  const newUrl = `${globalThis.location.pathname}?q=${encodeURIComponent(nextQuery)}`
-  history.pushState({}, '', newUrl)
+  const newUrl = new URL(globalThis.location.href)
+  newUrl.searchParams.set('q', nextQuery)
 }
 
 export const fetchData = async (url, options = {}) => {
