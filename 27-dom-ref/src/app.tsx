@@ -4,7 +4,7 @@ import SearchQueryDemo from './components/search-posts'
 
 export default function App() {
   return (
-    <LearnSection title="브라우저 API를 사용한 검색 데모" showTitle={false}>
+    <LearnSection title="DOM 참조" style={{ flexDirection: 'column' }}>
       <SearchQueryDemo />
     </LearnSection>
   )
@@ -15,8 +15,14 @@ export default function App() {
 function DOMRefDemo() {
   const [attach, setAttach] = useState<boolean>(true)
 
-  const pRef = useRef(null)
-  const intervalRef = useRef()
+  // const pRef = useRef(null)
+  // const intervalRef = useRef()
+
+  // DOM 참조 (컴포넌트 렌더링 결과로 실제 DOM 요소에 접근)
+  const pRef = useRef<HTMLParagraphElement>(null)
+
+  // 값 참조 (웹 API의 타이머 값 참조)
+  const intervalRef = useRef<Timeout>(undefined)
 
   useEffect(() => {
     const pElement = pRef.current
