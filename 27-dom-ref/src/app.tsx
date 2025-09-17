@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { LearnSection } from '@/components'
-import RandomCountUp from './demo/app'
+import SearchQueryDemo from './components/search-posts'
 
 export default function App() {
   return (
     <LearnSection title="DOM 참조" style={{ flexDirection: 'column' }}>
-      <RandomCountUp />
+      <SearchQueryDemo />
     </LearnSection>
   )
 }
