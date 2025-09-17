@@ -1,4 +1,10 @@
-export default function SearchList({ data }) {
+import { Post } from './api'
+
+interface Props {
+  data: Post[]
+}
+
+export default function SearchList({ data }: Props) {
   return (
     <ul className="space-y-6">
       {data?.map(({ id, title, body, user }) => (

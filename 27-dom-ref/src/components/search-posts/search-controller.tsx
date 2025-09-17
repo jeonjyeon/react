@@ -1,5 +1,9 @@
-export default function SearchController({ onSearch }) {
-  const handleSearch = (query) => () => {
+interface Props {
+  onSearch: (query: string) => void
+}
+
+export default function SearchController({ onSearch }: Props) {
+  const handleSearch = (query: string) => () => {
     onSearch(query)
   }
 

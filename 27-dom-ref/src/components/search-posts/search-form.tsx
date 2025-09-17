@@ -1,4 +1,11 @@
-export default function SearchForm({ query, onSubmit }) {
+import { FormEvent } from 'react'
+
+interface Props {
+  query: string
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void
+}
+
+export default function SearchForm({ query, onSubmit }: Props) {
   return (
     <form
       onSubmit={onSubmit}

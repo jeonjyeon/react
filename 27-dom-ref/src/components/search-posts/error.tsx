@@ -1,4 +1,6 @@
-export default function Status({ children }) {
+import { type PropsWithChildren } from 'react'
+
+export default function Error({ children }: PropsWithChildren) {
   return (
     <div
       role="status"

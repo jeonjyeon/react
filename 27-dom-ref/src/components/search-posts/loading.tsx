@@ -1,6 +1,7 @@
+import { type PropsWithChildren } from 'react'
 import Spinner from './spinner'
 
-export default function Loading({ children }) {
+export default function Loading({ children }: PropsWithChildren) {
   return (
     <div
       role="status"
