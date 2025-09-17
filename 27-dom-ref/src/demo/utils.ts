@@ -1,4 +1,4 @@
-export function getRandomCount(min, max) {
+export function getRandomCount(min: number, max: number) {
   return Math.round(Math.random() * (max - min) + min)
 }
 
@@ -7,11 +7,11 @@ export function getRandomHueColor() {
 }
 
 export function setAppColor() {
-  document.body.style.setProperty('--hue', getRandomHueColor())
+  document.body.style.setProperty('--hue', String(getRandomHueColor()))
 }
 
 const ORIGIN_TITLE = document.title
 
-export function setDocumentTitle(targetCount) {
+export function setDocumentTitle(targetCount: number) {
   document.title = `(${targetCount}) ${ORIGIN_TITLE}`
 }

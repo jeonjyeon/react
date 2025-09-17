@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
+import './app.css'
 import Logo from './logo'
 import Output from './output'
 import Shortcut from './shortcut'
 import { getRandomCount, setAppColor, setDocumentTitle } from './utils'
-import './app.css'
 
 const MIN = 50
 const MAX = 90
@@ -13,7 +13,7 @@ export default function RandomCountUp() {
   // ------------------------------------------------------------
   // 목표 카운트 설정 및 문서 제목 변경 동기화
 
-  const [targetCount, setTargetCount] = useState(getTargetCount)
+  const [targetCount, setTargetCount] = useState<number>(getTargetCount)
   useEffect(() => {
     setDocumentTitle(targetCount)
     setAppColor()
@@ -22,8 +22,8 @@ export default function RandomCountUp() {
   // ------------------------------------------------------------
   // 카운트 애니메이션
 
-  const [count, setCount] = useState(0)
-  const animateRef = useRef(0)
+  const [count, setCount] = useState<number>(0)
+  const animateRef = useRef<number>(0)
 
   useEffect(() => {
     animateRef.current = requestAnimationFrame(() => {
@@ -40,7 +40,7 @@ export default function RandomCountUp() {
   // ------------------------------------------------------------
   // 리플레이
 
-  const [replay, setReplay] = useState(0)
+  const [replay, setReplay] = useState<number>(0)
 
   useEffect(() => {
     const handleReplay = () => {
@@ -49,7 +49,7 @@ export default function RandomCountUp() {
       setReplay((r) => r + 1)
     }
 
-    const handleShortcut = (e) => {
+    const handleShortcut = (e: globalThis.KeyboardEvent) => {
       if (e.shiftKey && e.code === 'Enter') handleReplay()
     }
 
