@@ -1,12 +1,89 @@
 import { useEffect, useRef, useState } from 'react'
 import confetti from 'canvas-confetti'
+import VanillaTilt, { HTMLVanillaTiltElement } from 'vanilla-tilt'
 import { LearnSection } from '@/components'
 
 export default function App() {
+  const [visible, setVisible] = useState(true)
+
   return (
     <LearnSection title="DOM 참조" style={{ flexDirection: 'column' }}>
-      <ConfettiDemo />
+      <button
+        className="button mb-5"
+        type="button"
+        onClick={() => setVisible((v) => !v)}
+      >
+        {visible ? '박스 감춤' : '박스 보이기'}
+      </button>
+      {visible && <VanillaTiltDemo />}
     </LearnSection>
+  )
+}
+
+// --------------------------------------------------------------------------
+// vanilla-tilt 라이브러리와 리액트 연동
+
+const TILT_OPTIONS = {
+  'glare': true,
+  'max-glare': 0.5,
+  'scale': 1.2,
+}
+
+function VanillaTiltDemo() {
+  const boxs = useState(Array(3).fill(null))
+
+  // 1. ref 속성 + 콜백(callback) 함수 설정 방법
+  const _boxRefCallback = (element: HTMLElement) => {
+    console.log('바닐라 틸트 이펙트 설정')
+    VanillaTilt.init(element, TILT_OPTIONS)
+
+    // 클린업 (React 19+)
+    return () => {
+      console.log('바닐라 틸트 이펙트 제거')
+      ;(element as HTMLVanillaTiltElement).vanillaTilt?.destroy()
+    }
+  }
+
+  // 2. ref 속성 + useRef 훅 + useEffect 훅 설정 방법
+  const boxsRef = useRef<HTMLElement[]>([])
+
+  useEffect(() => {
+    const boxElements = boxsRef.current
+
+    if (boxElements.length > 0) {
+      for (const element of boxElements) {
+        if (element) {
+          console.log('바닐라 틸트 이펙트 설정')
+          VanillaTilt.init(element, TILT_OPTIONS)
+        }
+      }
+    }
+
+    return () => {
+      if (boxElements.length > 0) {
+        for (const element of boxElements) {
+          console.log('바닐라 틸트 이펙트 제거')
+          ;(element as HTMLVanillaTiltElement).vanillaTilt?.destroy()
+        }
+      }
+    }
+  }, [])
+
+  return (
+    <div role="group" className="text-4xl space-y-2">
+      {boxs.map((_, index) => (
+        <figure
+          key={index}
+          // ref={_boxRefCallback}
+          ref={(element) => {
+            if (element) boxsRef.current.push(element)
+          }}
+          className="size-40 bg-black text-white grid place-content-center uppercase"
+        >
+          box {index + 1}
+        </figure>
+      ))}
+    </div>
   )
 }
 
