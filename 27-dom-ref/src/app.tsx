@@ -1,25 +1,22 @@
 import { useGSAP } from '@gsap/react'
-import { use, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import confetti from 'canvas-confetti'
 import gsap from 'gsap'
 import VanillaTilt, { HTMLVanillaTiltElement } from 'vanilla-tilt'
-import { LearnSection } from '@/components'
+import { AutoFocusInput, LearnSection } from '@/components'
+import ClassRef from './components/class-ref'
 
 export default function App() {
   const [visible, setVisible] = useState(true)
 
   return (
     <LearnSection title="DOM 참조" style={{ flexDirection: 'column' }}>
-      <button
-        className="button mb-5"
-        type="button"
-        onClick={() => setVisible((v) => !v)}
-      >
-        {visible ? '감춤' : '표시'}
-      </button>
-      {/* {visible && <GsapDemo />} */}
-      {/* {visible && <GsapDemoRefCallback />} */}
-      {visible && <GsapDemoUseGsap />}
+      <ClassRef />
+      <AutoFocusInput
+        type="checkbox"
+        label="자동 초점 이동 인풋"
+        shouldFocus={true}
+      />
     </LearnSection>
   )
 }
