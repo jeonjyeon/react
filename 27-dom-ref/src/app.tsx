@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useGSAP } from '@gsap/react'
+import { use, useEffect, useRef, useState } from 'react'
 import confetti from 'canvas-confetti'
+import gsap from 'gsap'
 import VanillaTilt, { HTMLVanillaTiltElement } from 'vanilla-tilt'
 import { LearnSection } from '@/components'
 
@@ -13,10 +15,94 @@ export default function App() {
         type="button"
         onClick={() => setVisible((v) => !v)}
       >
-        {visible ? '박스 감춤' : '박스 보이기'}
+        {visible ? '감춤' : '표시'}
       </button>
-      {visible && <VanillaTiltDemo />}
+      {/* {visible && <GsapDemo />} */}
+      {/* {visible && <GsapDemoRefCallback />} */}
+      {visible && <GsapDemoUseGsap />}
     </LearnSection>
+  )
+}
+// --------------------------------------------------------------------------
+// gsap 라이브러리와 리액트 연동
+gsap.registerPlugin(useGSAP)
+function GsapDemoUseGsap() {
+  const containerRef = useRef(null)
+
+  useGSAP(
+    () => {
+      gsap.to('.box', { x: 360 })
+      gsap.to('.box', { y: 360 })
+    },
+    { scope: containerRef }
+  )
+
+  return (
+    <div ref={containerRef}>
+      <figure className="box">박스</figure>
+    </div>
+  )
+}
+
+function GsapDemoRefCallback() {
+  return (
+    <div
+      ref={(element) => {
+        if (element) {
+          const timeline = gsap.timeline({
+            repeat: -1,
+            defaults: { duration: 1.2, ease: 'power2.inOut' },
+          })
+
+          timeline
+            .to(element, { x: window.innerWidth - 180 - 20 })
+            .to(element, { y: window.innerHeight - 60 - 20 })
+            .to(element, { x: 0 })
+            .to(element, { y: 0 })
+        }
+      }}
+    >
+      <abbr title="Green Sock Animation Platform" className="text-5xl">
+        GsapDemoRefCallback
+      </abbr>
+    </div>
+  )
+}
+
+function GsapDemo() {
+  const boxRef = useRef(null)
+
+  useEffect(() => {
+    const box = boxRef.current
+
+    if (box) {
+      const timeline = gsap.timeline({
+        repeat: -1,
+        defaults: { duration: 1.2, ease: 'power2.inOut' },
+      })
+
+      timeline
+        .to(box, { x: window.innerWidth - 180 - 20 })
+        .to(box, { y: window.innerHeight - 60 - 20 })
+        .to(box, { x: 0 })
+        .to(box, { y: 0 })
+
+      // 클린업 (React 19+)
+      return () => {
+        console.log('GSAP 애니메이션 제거')
+        timeline.kill()
+        gsap.killTweensOf(box)
+        gsap.set(box, { clearProps: 'all' })
+      }
+    }
+  }, [])
+
+  return (
+    <div ref={boxRef}>
+      <abbr title="Green Sock Animation Platform" className="text-5xl">
+        GsapDemo
+      </abbr>
+    </div>
   )
 }
 
